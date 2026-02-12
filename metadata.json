@@ -1,0 +1,7 @@
+{
+  "name": "Copy of AI Scam Detector",
+  "description": "A premium cybersecurity tool that uses Gemini AI to analyze messages, emails, and screenshots for potential scams, providing risk scores and safety advice.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
