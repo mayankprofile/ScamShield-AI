@@ -6,6 +6,17 @@ export enum RiskLevel {
   DANGEROUS = "Dangerous"
 }
 
+export type PlanType = 'Free' | 'Pro' | 'Business';
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  plan: PlanType;
+  joinDate: number;
+}
+
 export interface ScamAnalysis {
   id: string;
   timestamp: number;
@@ -13,8 +24,13 @@ export interface ScamAnalysis {
   riskLevel: RiskLevel;
   reasons: string[];
   safetyAdvice: string[];
+  aiExplanation?: string;
   originalContent?: string;
   hasImage?: boolean;
+  detectedLanguage?: string;
+  translation?: string;
+  extractedText?: string;
+  type?: 'Text' | 'Screenshot' | 'Invoice';
 }
 
 export interface HistoryItem {
@@ -22,4 +38,5 @@ export interface HistoryItem {
   timestamp: number;
   scamScore: number;
   riskLevel: RiskLevel;
+  type?: 'Text' | 'Screenshot' | 'Invoice';
 }
