@@ -1,12 +1,10 @@
 
 export type TranslationKey = 
-  | 'nav_safety' | 'nav_library' | 'nav_invoice' | 'nav_pricing' | 'btn_verify'
+  | 'nav_safety' | 'nav_library' | 'nav_invoice' | 'btn_verify'
   | 'hero_badge' | 'hero_title_1' | 'hero_title_2' | 'hero_desc' 
   | 'btn_scan_now' | 'scanner_header' | 'scanner_badge' | 'scanner_placeholder'
   | 'scanner_upload_title' | 'scanner_helper' | 'scanner_supported_note' | 'scanner_submit_btn' | 'scanner_analyzing'
   | 'history_title' | 'features_title' | 'lang_selector_label'
-  | 'pricing_title' | 'pricing_desc' | 'plan_free' | 'plan_pro' | 'plan_business'
-  | 'plan_most_popular' | 'btn_upgrade_pro' | 'btn_get_business'
   | 'features_phishing_title' | 'features_phishing_desc'
   | 'features_whatsapp_title' | 'features_whatsapp_desc'
   | 'features_job_title' | 'features_job_desc'
@@ -14,7 +12,7 @@ export type TranslationKey =
   | 'trust_title' | 'trust_desc' | 'stat_accuracy' | 'stat_speed' | 'stat_blocked' | 'stat_monitoring'
   | 'translating_overlay' | 'footer_copy' | 'nav_privacy' | 'nav_terms' | 'btn_back_home' | 'btn_back_library'
   | 'lang_support_title' | 'lang_support_desc' | 'lang_support_note'
-  | 'pricing_monthly' | 'pricing_yearly' | 'btn_get_started' | 'btn_contact_sales'
+  | 'btn_get_started' | 'btn_contact_sales' | 'btn_get_business'
   | 'faq_title' | 'faq_desc' | 'faq_footer'
   | 'faq_q1' | 'faq_a1' | 'faq_q2' | 'faq_a2' | 'faq_q3' | 'faq_a3' | 'faq_q4' | 'faq_a4'
   | 'faq_q5' | 'faq_a5' | 'faq_q6' | 'faq_a6' | 'faq_q7' | 'faq_a7' | 'faq_q8' | 'faq_a8'
@@ -26,7 +24,6 @@ export const translations: Record<string, Record<TranslationKey, string>> = {
     nav_safety: 'Safety Guide',
     nav_library: 'Scam Library',
     nav_invoice: 'Invoice Detector',
-    nav_pricing: 'Pricing',
     btn_verify: 'Verify Payments',
     hero_badge: 'Powered by ScamGuard AI',
     hero_title_1: 'Detect Online Scams',
@@ -44,18 +41,9 @@ export const translations: Record<string, Record<TranslationKey, string>> = {
     history_title: 'Recent Activity',
     features_title: 'Total Digital Protection',
     lang_selector_label: 'Language',
-    pricing_title: 'Simple & Transparent Pricing',
-    pricing_desc: 'Choose the level of protection that fits your digital life. No hidden fees, just pure security.',
-    plan_free: 'Starter',
-    plan_pro: 'Advanced',
-    plan_business: 'Enterprise',
-    plan_most_popular: 'Recommended',
-    btn_upgrade_pro: 'Get Started',
     btn_get_business: 'Contact Sales',
     btn_get_started: 'Get Started',
     btn_contact_sales: 'Contact Sales',
-    pricing_monthly: 'Monthly Plan',
-    pricing_yearly: 'Yearly Plan',
     features_phishing_title: 'Phishing Emails',
     features_phishing_desc: 'Identify spoofed addresses and malicious attachments instantly.',
     features_whatsapp_title: 'SMS/WhatsApp Fraud',
@@ -92,12 +80,12 @@ export const translations: Record<string, Record<TranslationKey, string>> = {
     faq_a4: 'Yes. Our system can identify common scam types including job offers, payment requests, fake links, phishing emails, and social media fraud.',
     faq_q5: 'Do I need to create an account to use it?',
     faq_a5: 'No. You can use the basic scam checking features without creating an account.',
-    faq_q6: 'What is included in the Free plan?',
-    faq_a6: 'The free plan includes basic scam detection, text analysis, limited screenshot scans, and safety tips.',
+    faq_q6: 'What features are free?',
+    faq_a6: 'ScamGuard provides basic scam detection, text analysis, screenshot scans, and safety tips for all users.',
     faq_q7: 'How accurate is the scam detection?',
     faq_a7: 'Our AI uses advanced pattern recognition and language analysis to detect suspicious content with high accuracy, but users should always stay alert and verify information.',
     faq_q8: 'Can businesses use this tool?',
-    faq_a8: 'Yes. Our Business plan allows bulk scam detection, team access, and API integration for companies.',
+    faq_a8: 'Yes. We offer enterprise-grade scam detection, team access, and API integration for companies.',
     contact_title: 'Contact Support',
     contact_sub: 'Have a question or need help? Fill out the form and our team will get back to you.',
     contact_name: 'Full Name',
@@ -116,7 +104,6 @@ export const translations: Record<string, Record<TranslationKey, string>> = {
     nav_safety: 'सुरक्षा मार्गदर्शिका',
     nav_library: 'स्कैम लाइब्रेरी',
     nav_invoice: 'इनवॉइस डिटेक्टर',
-    nav_pricing: 'कीमतें',
     btn_verify: 'भुगतान सत्यापित करें',
     hero_badge: 'ScamGuard AI द्वारा संचालित',
     hero_title_1: 'ऑनलाइन स्कैम का पता लगाएं',
@@ -127,25 +114,16 @@ export const translations: Record<string, Record<TranslationKey, string>> = {
     scanner_badge: 'बहु-भाषा OCR',
     scanner_placeholder: 'यहां ईमेल, संदेश, नौकरी का प्रस्ताव या संदिग्ध लिंक पेस्ट करें...',
     scanner_upload_title: 'किसी भी भाषा में स्क्रीनशॉट अपलोड करें',
-    scanner_helper: 'AI स्वचालित रूप से पाठ पढ़ेगा, भाषा का पता लगाएगा, उसका अंग्रेजी में अनुवाद करेगा और जांच करेगा कि क्या यह कोई घोटाला हो सकता है।',
+    scanner_helper: 'AI स्वचालित रूप से पाठ पढ़ेगा, भाषा का पता लगेगा, उसका अंग्रेजी में अनुवाद करेगा और जांच करेगा कि क्या यह कोई घोटाला हो सकता है।',
     scanner_supported_note: 'हिंदी, अंग्रेजी, तमिल, बंगाली, अरबी, स्पेनिश, फ्रेंच, चीनी और 100+ अन्य भाषाओं के साथ काम करता है।',
     scanner_submit_btn: 'स्क्रीनशॉट स्कैन करें',
     scanner_analyzing: 'AI विश्लेषण और अनुवाद कर रहा है...',
     history_title: 'हाल की गतिविधि',
     features_title: 'संपूर्ण डिजिटल सुरक्षा',
     lang_selector_label: 'भाषा',
-    pricing_title: 'सरल और पारदर्शी कीमतें',
-    pricing_desc: 'सुरक्षा का वह स्तर चुनें जो आपके डिजिटल जीवन के लिए उपयुक्त हो। कोई छिपी हुई फीस नहीं।',
-    plan_free: 'स्टार्टर',
-    plan_pro: 'एडवांस्ड',
-    plan_business: 'एंटरप्राइज',
-    plan_most_popular: 'अनुशंसित',
-    btn_upgrade_pro: 'शुरू करें',
     btn_get_business: 'सेल्स से संपर्क करें',
     btn_get_started: 'शुरू करें',
     btn_contact_sales: 'सेल्स से संपर्क करें',
-    pricing_monthly: 'मासिक प्लान',
-    pricing_yearly: 'वार्षिक प्लान',
     features_phishing_title: 'फ़िशिंग ईमेल',
     features_phishing_desc: 'स्पूफ किए गए पते और दुर्भावनापूर्ण अनुलग्नकों को तुरंत पहचानें।',
     features_whatsapp_title: 'SMS/WhatsApp धोखाधड़ी',
@@ -182,12 +160,12 @@ export const translations: Record<string, Record<TranslationKey, string>> = {
     faq_a4: 'हाँ। हमारा सिस्टम नौकरी के ऑफर, भुगतान अनुरोध, फर्जी लिंक, फ़िशिंग ईमेल और सोशल मीडिया धोखाधड़ी सहित सामान्य स्कैम प्रकारों की पहचान कर सकता है।',
     faq_q5: 'क्या मुझे इसका उपयोग करने के लिए एक खाता बनाने की आवश्यकता है?',
     faq_a5: 'नहीं। आप खाता बनाए बिना बुनियादी स्कैम चेकिंग सुविधाओं का उपयोग कर सकते हैं।',
-    faq_q6: 'फ्री प्लान में क्या शामिल है?',
-    faq_a6: 'फ्री प्लान में बुनियादी स्कैम डिटेक्शन, टेक्स्ट विश्लेषण, सीमित स्क्रीनशॉट स्कैन और सुरक्षा युक्तियाँ शामिल हैं।',
+    faq_q6: 'कौन सी सुविधाएँ मुफ्त हैं?',
+    faq_a6: 'ScamGuard सभी उपयोगकर्ताओं के लिए बुनियादी स्कैम डिटेक्शन, टेक्स्ट विश्लेषण, स्क्रीनशॉट स्कैन और सुरक्षा युक्तियाँ प्रदान करता है।',
     faq_q7: 'स्कैम डिटेक्शन कितना सटीक है?',
     faq_a7: 'हमारा AI उच्च सटीकता के साथ संदिग्ध सामग्री का पता लगाने के लिए उन्नत पैटर्न पहचान और भाषा विश्लेषण का उपयोग करता है, लेकिन उपयोगकर्ताओं को हमेशा सतर्क रहना चाहिए।',
     faq_q8: 'क्या व्यवसाय इस टूल का उपयोग कर सकते हैं?',
-    faq_a8: 'हाँ। हमारा बिजनेस प्लान कंपनियों के लिए बल्क स्कैम डिटेक्शन, टीम एक्सेस और API एकीकरण की अनुमति देता है।',
+    faq_a8: 'हाँ। हम कंपनियों के लिए एंटरप्राइज-ग्रेड स्कैम डिटेक्शन, टीम एक्सेस और API एकीकरण प्रदान करते हैं।',
     contact_title: 'सहायता से संपर्क करें',
     contact_sub: 'कोई प्रश्न है या सहायता चाहिए? फ़ॉर्म भरें और हमारी टीम आपसे संपर्क करेगी।',
     contact_name: 'पूरा नाम',

@@ -17,8 +17,7 @@ import {
   ArrowRight,
   Clock,
   BookOpen,
-  Library,
-  CreditCard
+  Library
 } from 'lucide-react';
 import { TranslationKey } from '../services/translations';
 
@@ -336,7 +335,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onBack, onNavigate, t 
                 <QuickLinkCard icon={BookOpen} label="Safety Guide" onClick={() => onNavigate('safety')} />
                 <QuickLinkCard icon={Library} label="Scam Library" onClick={() => onNavigate('library')} />
                 <QuickLinkCard icon={HelpCircle} label="How to Use" onClick={() => onNavigate('how-to-use')} />
-                <QuickLinkCard icon={CreditCard} label="Pricing" onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); onNavigate('home'); setTimeout(() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }), 100); }} />
+                <QuickLinkCard icon={Search} label="Start Scan" onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); onNavigate('home'); setTimeout(() => document.getElementById('scanner')?.scrollIntoView({ behavior: 'smooth' }), 100); }} />
               </div>
             </div>
           </div>
@@ -352,7 +351,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onBack, onNavigate, t 
                 onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); onNavigate('home'); setTimeout(() => document.getElementById('scanner')?.scrollIntoView({ behavior: 'smooth' }), 100); }}
                 className="px-10 py-4 bg-white text-blue-600 font-black text-lg rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-2xl flex items-center justify-center gap-3 mx-auto"
               >
-                Scan a Message Now <ArrowRight className="w-5 h-5" />
+                Scan a Message Now <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </div>

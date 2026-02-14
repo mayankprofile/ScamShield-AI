@@ -23,11 +23,10 @@ interface DashboardProps {
   user: User | null;
   history: HistoryItem[];
   onEditProfile: () => void;
-  onUpgrade: () => void;
   onNewScan: () => void;
 }
 
-export const Dashboard: React.FC<DashboardProps> = ({ user, history, onEditProfile, onUpgrade, onNewScan }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ user, history, onEditProfile, onNewScan }) => {
   if (!user) return null;
 
   const getRiskColor = (level: RiskLevel) => {
@@ -65,37 +64,25 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, history, onEditProfi
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
-        {/* Plan Details Card */}
+        {/* Subscription Status Card */}
         <div className="bg-slate-900 border border-slate-800 rounded-[32px] p-8 relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 blur-[40px] rounded-full group-hover:bg-blue-600/10 transition-colors" />
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center border border-blue-500/20">
               <CreditCard className="w-5 h-5 text-blue-500" />
             </div>
-            <h2 className="text-lg font-bold text-white">Current Subscription</h2>
+            <h2 className="text-lg font-bold text-white">Subscription Status</h2>
           </div>
           <div className="mb-6">
-            <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1">Plan Level</div>
+            <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1">Current Plan</div>
             <div className="text-3xl font-black text-white flex items-center gap-2">
               {user.plan}
               <span className="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full font-black uppercase">Active</span>
             </div>
           </div>
-          <div className="space-y-3 mb-8">
-            <div className="flex justify-between text-sm">
-              <span className="text-slate-500">Scan Limit</span>
-              <span className="text-slate-200 font-bold">{user.plan === 'Free' ? '5/day' : 'Unlimited'}</span>
-            </div>
-            <div className="w-full h-2 bg-slate-950 rounded-full overflow-hidden">
-              <div className="h-full bg-blue-600 rounded-full" style={{ width: user.plan === 'Free' ? '40%' : '100%' }} />
-            </div>
-          </div>
-          <button 
-            onClick={onUpgrade}
-            className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white text-sm font-bold rounded-xl transition-all border border-slate-700"
-          >
-            Upgrade Plan
-          </button>
+          <p className="text-xs text-slate-500 leading-relaxed font-medium">
+            You have full access to our scan tools and security resources under your current {user.plan} plan.
+          </p>
         </div>
 
         {/* Profile Stats Card */}

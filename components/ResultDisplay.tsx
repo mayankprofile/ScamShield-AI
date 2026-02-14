@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { ScamAnalysis, RiskLevel } from '../types';
-import { AlertTriangle, CheckCircle2, ShieldAlert, Info, ArrowRight, Languages, MessageSquare, Quote, ShieldCheck } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, ShieldAlert, Info, ArrowRight, Languages, MessageSquare, Quote, ShieldCheck, Coffee } from 'lucide-react';
 
 interface ResultDisplayProps {
   analysis: ScamAnalysis;
@@ -37,12 +37,12 @@ export const ResultDisplay: React.FC<ResultDisplayProps> = ({ analysis, onReset 
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="max-w-4xl mx-auto mt-12 animate-in fade-in slide-in-from-bottom-4 duration-700 space-y-8">
       <div className="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
         <div className={`p-8 md:p-12 text-center border-b border-slate-800 ${getRiskBg(analysis.riskLevel)}`}>
           <div className="flex flex-col items-center gap-4 mb-6">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-950/50 border border-slate-800 text-sm font-semibold tracking-wider uppercase text-slate-400">
-              Analysis Report
+              ScamGuard Report
             </div>
             {analysis.detectedLanguage && (
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-black uppercase tracking-widest">
@@ -158,11 +158,36 @@ export const ResultDisplay: React.FC<ResultDisplayProps> = ({ analysis, onReset 
         <div className="p-8 bg-slate-950 text-center">
           <button
             onClick={onReset}
-            className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 font-bold tracking-wide group"
+            className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 font-bold tracking-wide group outline-none"
           >
             Start New Scan
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
+        </div>
+      </div>
+
+      {/* Support ScamGuard Section */}
+      <div className="bg-slate-900 border border-slate-800 rounded-[32px] p-8 md:p-12 text-center relative overflow-hidden shadow-2xl">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 blur-[60px] rounded-full -z-10" />
+        <div className="max-w-2xl mx-auto space-y-6">
+          <h3 className="text-2xl font-black text-white tracking-tight">Support ScamGuard</h3>
+          <p className="text-slate-400 font-medium leading-relaxed">
+            This tool is completely free to use. If you found it helpful, you can support us by buying us a coffee. Your support helps us improve ScamGuard and keep people safe from scams.
+          </p>
+          <div className="flex flex-col items-center gap-4">
+            <button
+              onClick={() => window.open('https://buymeacoffee.com/scamguard', '_blank')}
+              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black rounded-full shadow-xl shadow-blue-500/20 transition-all hover:scale-105 active:scale-95 flex items-center gap-2 outline-none"
+            >
+              <Coffee className="w-5 h-5" /> Buy Me a Coffee
+            </button>
+            <button 
+              onClick={onReset}
+              className="text-slate-500 hover:text-slate-300 font-bold text-sm transition-colors"
+            >
+              Maybe Later
+            </button>
+          </div>
         </div>
       </div>
     </div>

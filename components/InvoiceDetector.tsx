@@ -18,7 +18,8 @@ import {
   CreditCard,
   Layers,
   Edit3,
-  ShieldCheck
+  ShieldCheck,
+  Coffee
 } from 'lucide-react';
 import { ScamAnalysis, RiskLevel } from '../types';
 import { analyzeContent } from '../services/geminiService';
@@ -26,7 +27,6 @@ import { ScanningView } from './ScanningView';
 import { TranslationKey } from '../services/translations';
 
 interface InvoiceDetectorProps {
-  // Added t prop to match usage in App.tsx
   t: (key: TranslationKey) => string;
 }
 
@@ -106,13 +106,13 @@ export const InvoiceDetector: React.FC<InvoiceDetectorProps> = ({ t }) => {
             Fake Invoice & <span className="text-blue-500">Payment Screenshot</span> Detector
           </h1>
           <p className="text-slate-400 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-            Upload a bill, invoice, or payment screenshot and let AI check if it looks suspicious or manipulated.
+            Upload a bill, invoice, or payment screenshot and let ScamGuard check if it looks suspicious or manipulated.
           </p>
         </div>
 
         {analysis ? (
           /* Result View */
-          <div className="animate-in fade-in zoom-in-95 duration-500">
+          <div className="animate-in fade-in zoom-in-95 duration-500 space-y-8">
             <div className="bg-slate-900 border border-slate-800 rounded-[32px] overflow-hidden shadow-2xl">
               <div className={`p-8 md:p-12 text-center border-b border-slate-800 ${getRiskBg(analysis.riskLevel)}`}>
                 <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-slate-950/50 border border-slate-800 text-sm font-semibold tracking-wider uppercase text-slate-400">
@@ -181,6 +181,31 @@ export const InvoiceDetector: React.FC<InvoiceDetectorProps> = ({ t }) => {
                 </button>
               </div>
             </div>
+
+            {/* Support ScamGuard Section */}
+            <div className="bg-slate-900 border border-slate-800 rounded-[32px] p-8 md:p-12 text-center relative overflow-hidden shadow-2xl">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 blur-[60px] rounded-full -z-10" />
+              <div className="max-w-2xl mx-auto space-y-6">
+                <h3 className="text-2xl font-black text-white tracking-tight">Support ScamGuard</h3>
+                <p className="text-slate-400 font-medium leading-relaxed">
+                  This tool is completely free to use. If you found it helpful, you can support us by buying us a coffee. Your support helps us improve ScamGuard and keep people safe from scams.
+                </p>
+                <div className="flex flex-col items-center gap-4">
+                  <button
+                    onClick={() => window.open('https://buymeacoffee.com/scamguard', '_blank')}
+                    className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black rounded-full shadow-xl shadow-blue-500/20 transition-all hover:scale-105 active:scale-95 flex items-center gap-2 outline-none"
+                  >
+                    <Coffee className="w-5 h-5" /> Buy Me a Coffee
+                  </button>
+                  <button 
+                    onClick={removeFile}
+                    className="text-slate-500 hover:text-slate-300 font-bold text-sm transition-colors"
+                  >
+                    Maybe Later
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         ) : (
           /* Upload View */
@@ -247,7 +272,7 @@ export const InvoiceDetector: React.FC<InvoiceDetectorProps> = ({ t }) => {
                   Analyze Invoice
                 </button>
                 <p className="text-slate-600 text-sm font-medium">
-                  AI will scan for signs of fake logos, edited amounts, and suspicious payment details.
+                  ScamGuard will scan for signs of fake logos, edited amounts, and suspicious payment details.
                 </p>
                 {error && <p className="text-red-400 font-bold text-sm bg-red-400/10 px-4 py-2 rounded-lg border border-red-400/20">{error}</p>}
               </div>
@@ -260,7 +285,7 @@ export const InvoiceDetector: React.FC<InvoiceDetectorProps> = ({ t }) => {
                   <div className="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center border border-blue-500/20">
                     <ShieldAlert className="w-6 h-6 text-blue-500" />
                   </div>
-                  <h2 className="text-3xl font-black text-white">What This Tool Detects</h2>
+                  <h2 className="text-3xl font-black text-white">What ScamGuard Detects</h2>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <DetectionCard icon={ImageIcon} title="Fake Logos" desc="Low res or forged icons." />

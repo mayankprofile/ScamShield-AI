@@ -8,7 +8,6 @@ import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsConditions } from './components/TermsConditions';
 import { ContactModal } from './components/ContactModal';
 import { ContactPage } from './components/ContactPage';
-import { Pricing } from './components/Pricing';
 import { FAQ } from './components/FAQ';
 import { TrustCounter } from './components/TrustCounter';
 import { ScamLibrary } from './components/ScamLibrary';
@@ -49,7 +48,8 @@ import {
   LogIn,
   History as HistoryIcon,
   ShieldCheck,
-  Phone
+  Phone,
+  Coffee
 } from 'lucide-react';
 
 type View = 'home' | 'privacy' | 'terms' | 'library' | 'safety' | 'invoice-detector' | 'how-to-use' | 'login' | 'signup' | 'dashboard' | 'profile' | 'contact';
@@ -201,14 +201,6 @@ const App: React.FC = () => {
     setShowToast("Profile updated successfully");
   };
 
-  const handleUpgradePlan = (plan: PlanType) => {
-    if (!currentUser) return;
-    const updatedUser = { ...currentUser, plan };
-    setCurrentUser(updatedUser);
-    localStorage.setItem('scam_guard_user', JSON.stringify(updatedUser));
-    setShowToast(`Successfully upgraded to ${plan}!`);
-  };
-
   const navigateToHome = () => {
     setCurrentView('home');
     setAnalysis(null);
@@ -307,9 +299,6 @@ const App: React.FC = () => {
                       <button onClick={() => { changeView('dashboard'); setIsUserMenuOpen(false); }} className="w-full text-left px-4 py-3 hover:bg-blue-600/10 text-slate-300 hover:text-white transition-colors flex items-center gap-3">
                         <LayoutDashboard className="w-4 h-4 text-blue-400" /> My Dashboard
                       </button>
-                      <button onClick={() => { scrollToSection('pricing'); setIsUserMenuOpen(false); }} className="w-full text-left px-4 py-3 hover:bg-blue-600/10 text-slate-300 hover:text-white transition-colors flex items-center gap-3">
-                        <CreditCard className="w-4 h-4 text-blue-400" /> My Plan
-                      </button>
                       <button onClick={() => { changeView('profile'); setIsUserMenuOpen(false); }} className="w-full text-left px-4 py-3 hover:bg-blue-600/10 text-slate-300 hover:text-white transition-colors flex items-center gap-3">
                         <UserIcon className="w-4 h-4 text-blue-400" /> Edit Profile
                       </button>
@@ -364,7 +353,7 @@ const App: React.FC = () => {
       ) : currentView === 'signup' ? (
         <Signup onBack={navigateToHome} onLoginClick={() => setCurrentView('login')} onSignupSuccess={(user) => { setCurrentUser(user); setCurrentView('dashboard'); setShowToast("Account created successfully!"); }} />
       ) : currentView === 'dashboard' ? (
-        <Dashboard user={currentUser} history={history} onEditProfile={() => setCurrentView('profile')} onUpgrade={() => scrollToSection('pricing')} onNewScan={() => scrollToSection('scanner')} />
+        <Dashboard user={currentUser} history={history} onEditProfile={() => setCurrentView('profile')} onNewScan={() => scrollToSection('scanner')} />
       ) : currentView === 'profile' ? (
         <Profile user={currentUser} onBack={() => setCurrentView('dashboard')} onUpdate={handleUpdateProfile} />
       ) : currentView === 'contact' ? (
@@ -445,7 +434,34 @@ const App: React.FC = () => {
                   <FeatureCard icon={Briefcase} title={t('features_job_title')} desc={t('features_job_desc')} />
                   <FeatureCard icon={CreditCard} title={t('features_payment_title')} desc={t('features_payment_desc')} />
                 </section>
-                <Pricing onPlanClick={(plan) => currentUser ? handleUpgradePlan(plan as PlanType) : setCurrentView('login')} t={t} />
+
+                {/* Permanent Support Section for Home Page - MOVED ABOVE FAQ */}
+                <section className="max-w-4xl mx-auto mt-24 px-6 animate-in fade-in duration-1000">
+                  <div className="bg-slate-900 border border-slate-800 rounded-[32px] p-8 md:p-12 text-center relative overflow-hidden shadow-2xl">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 blur-[60px] rounded-full -z-10" />
+                    <div className="max-w-2xl mx-auto space-y-6">
+                      <h3 className="text-2xl font-black text-white tracking-tight">Support ScamGuard</h3>
+                      <p className="text-slate-400 font-medium leading-relaxed">
+                        ScamGuard is free to use for everyone. If you found it helpful, you can support us by buying us a coffee. Your support helps us improve our AI and keep people safe from scams.
+                      </p>
+                      <div className="flex flex-col items-center gap-4">
+                        <button
+                          onClick={() => window.open('https://buymeacoffee.com/scamguard', '_blank')}
+                          className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black rounded-full shadow-xl shadow-blue-500/20 transition-all hover:scale-105 active:scale-95 flex items-center gap-2 outline-none"
+                        >
+                          <Coffee className="w-5 h-5" /> Buy Me a Coffee
+                        </button>
+                        <button 
+                          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                          className="text-slate-500 hover:text-slate-300 font-bold text-sm transition-colors"
+                        >
+                          Maybe Later
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
                 <FAQ t={t} onContactClick={() => changeView('contact')} />
               </>
             )}
@@ -522,7 +538,6 @@ const App: React.FC = () => {
                 
                 <MobileNavLink icon={<BookOpen className="w-5 h-5" />} label="Safety Guide" onClick={() => changeView('safety')} active={currentView === 'safety'} />
                 <MobileNavLink icon={<Library className="w-5 h-5" />} label="Scam Library" onClick={() => changeView('library')} active={currentView === 'library'} />
-                <MobileNavLink icon={<CreditCard className="w-5 h-5" />} label="Pricing" onClick={() => scrollToSection('pricing')} />
                 <MobileNavLink icon={<HelpCircle className="w-5 h-5" />} label="How to Use" onClick={() => changeView('how-to-use')} active={currentView === 'how-to-use'} />
                 <MobileNavLink icon={<Phone className="w-5 h-5" />} label="Contact Us" onClick={() => changeView('contact')} active={currentView === 'contact'} />
               </div>
@@ -534,7 +549,6 @@ const App: React.FC = () => {
                 {currentUser ? (
                   <>
                     <MobileNavLink icon={<LayoutDashboard className="w-5 h-5" />} label="My Dashboard" onClick={() => changeView('dashboard')} active={currentView === 'dashboard'} />
-                    <MobileNavLink icon={<ShieldCheck className="w-5 h-5" />} label="My Plan" onClick={() => scrollToSection('pricing')} />
                     <MobileNavLink icon={<UserIcon className="w-5 h-5" />} label="Edit Profile" onClick={() => changeView('profile')} active={currentView === 'profile'} />
                     <MobileNavLink icon={<HistoryIcon className="w-5 h-5" />} label="Scan History" onClick={() => changeView('dashboard')} />
                   </>
