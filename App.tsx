@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Scanner } from './components/Scanner';
 import { ResultDisplay } from './components/ResultDisplay';
@@ -7,7 +6,7 @@ import { ScanningView } from './components/ScanningView';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsConditions } from './components/TermsConditions';
 import { ContactModal } from './components/ContactModal';
-import { ContactPage } from './components/ContactPage';
+import { HomeContact } from './components/HomeContact';
 import { FAQ } from './components/FAQ';
 import { TrustCounter } from './components/TrustCounter';
 import { ScamLibrary } from './components/ScamLibrary';
@@ -52,7 +51,7 @@ import {
   Coffee
 } from 'lucide-react';
 
-type View = 'home' | 'privacy' | 'terms' | 'library' | 'safety' | 'invoice-detector' | 'how-to-use' | 'login' | 'signup' | 'dashboard' | 'profile' | 'contact';
+type View = 'home' | 'privacy' | 'terms' | 'library' | 'safety' | 'invoice-detector' | 'how-to-use' | 'login' | 'signup' | 'dashboard' | 'profile';
 
 const SUPPORTED_LANGS = [
   { name: 'Arabic', code: 'sa', langCode: 'ar' },
@@ -347,7 +346,7 @@ const App: React.FC = () => {
       ) : currentView === 'invoice-detector' ? (
         <InvoiceDetector t={t} />
       ) : currentView === 'how-to-use' ? (
-        <HowToUse onBack={navigateToHome} t={t} onContactClick={() => setIsContactOpen(true)} onNavigate={(v) => setCurrentView(v as View)} />
+        <HowToUse onBack={navigateToHome} t={t} onContactClick={() => scrollToSection('contact-section')} onNavigate={(v) => setCurrentView(v as View)} />
       ) : currentView === 'login' ? (
         <Login onBack={navigateToHome} onSignupClick={() => setCurrentView('signup')} onLoginSuccess={(user) => { setCurrentUser(user); setCurrentView('dashboard'); setShowToast("Welcome back!"); }} />
       ) : currentView === 'signup' ? (
@@ -356,8 +355,6 @@ const App: React.FC = () => {
         <Dashboard user={currentUser} history={history} onEditProfile={() => setCurrentView('profile')} onNewScan={() => scrollToSection('scanner')} />
       ) : currentView === 'profile' ? (
         <Profile user={currentUser} onBack={() => setCurrentView('dashboard')} onUpdate={handleUpdateProfile} />
-      ) : currentView === 'contact' ? (
-        <ContactPage onBack={navigateToHome} onNavigate={changeView} t={t} />
       ) : (
         <>
           {!analysis && !loading && (
@@ -435,7 +432,7 @@ const App: React.FC = () => {
                   <FeatureCard icon={CreditCard} title={t('features_payment_title')} desc={t('features_payment_desc')} />
                 </section>
 
-                {/* Permanent Support Section for Home Page - MOVED ABOVE FAQ */}
+                {/* Permanent Support Section for Home Page */}
                 <section className="max-w-4xl mx-auto mt-24 px-6 animate-in fade-in duration-1000">
                   <div className="bg-slate-900 border border-slate-800 rounded-[32px] p-8 md:p-12 text-center relative overflow-hidden shadow-2xl">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 blur-[60px] rounded-full -z-10" />
@@ -462,7 +459,10 @@ const App: React.FC = () => {
                   </div>
                 </section>
 
-                <FAQ t={t} onContactClick={() => changeView('contact')} />
+                {/* Full Contact Section on Homepage */}
+                <HomeContact onNavigate={changeView} t={t} />
+
+                <FAQ t={t} onContactClick={() => scrollToSection('contact-section')} />
               </>
             )}
           </main>
@@ -530,16 +530,14 @@ const App: React.FC = () => {
 
               {/* Navigation Links List */}
               <div className="space-y-1">
-                <div className="lg:hidden">
+                <div>
                   <MobileNavLink icon={<Home className="w-5 h-5" />} label="Home" onClick={navigateToHome} active={currentView === 'home'} />
                   <MobileNavLink icon={<Search className="w-5 h-5" />} label="Scan Content" onClick={() => scrollToSection('scanner')} />
                   <MobileNavLink icon={<FileText className="w-5 h-5" />} label="Invoice Detector" onClick={() => changeView('invoice-detector')} active={currentView === 'invoice-detector'} />
+                  <MobileNavLink icon={<BookOpen className="w-5 h-5" />} label="Safety Guide" onClick={() => changeView('safety')} active={currentView === 'safety'} />
+                  <MobileNavLink icon={<Library className="w-5 h-5" />} label="Scam Library" onClick={() => changeView('library')} active={currentView === 'library'} />
+                  <MobileNavLink icon={<HelpCircle className="w-5 h-5" />} label="How to Use" onClick={() => changeView('how-to-use')} active={currentView === 'how-to-use'} />
                 </div>
-                
-                <MobileNavLink icon={<BookOpen className="w-5 h-5" />} label="Safety Guide" onClick={() => changeView('safety')} active={currentView === 'safety'} />
-                <MobileNavLink icon={<Library className="w-5 h-5" />} label="Scam Library" onClick={() => changeView('library')} active={currentView === 'library'} />
-                <MobileNavLink icon={<HelpCircle className="w-5 h-5" />} label="How to Use" onClick={() => changeView('how-to-use')} active={currentView === 'how-to-use'} />
-                <MobileNavLink icon={<Phone className="w-5 h-5" />} label="Contact Us" onClick={() => changeView('contact')} active={currentView === 'contact'} />
               </div>
 
               <div className="h-px bg-slate-800 mx-4" />

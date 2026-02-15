@@ -1,4 +1,3 @@
-
 export type TranslationKey = 
   | 'nav_safety' | 'nav_library' | 'nav_invoice' | 'btn_verify'
   | 'hero_badge' | 'hero_title_1' | 'hero_title_2' | 'hero_desc' 
