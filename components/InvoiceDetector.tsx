@@ -28,9 +28,10 @@ import { TranslationKey } from '../services/translations';
 
 interface InvoiceDetectorProps {
   t: (key: TranslationKey) => string;
+  onBuyCoffee: () => void;
 }
 
-export const InvoiceDetector: React.FC<InvoiceDetectorProps> = ({ t }) => {
+export const InvoiceDetector: React.FC<InvoiceDetectorProps> = ({ t, onBuyCoffee }) => {
   const [file, setFile] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [analysis, setAnalysis] = useState<ScamAnalysis | null>(null);
@@ -192,7 +193,7 @@ export const InvoiceDetector: React.FC<InvoiceDetectorProps> = ({ t }) => {
                 </p>
                 <div className="flex flex-col items-center gap-4">
                   <button
-                    onClick={() => window.open('https://buymeacoffee.com/scamguard', '_blank')}
+                    onClick={onBuyCoffee}
                     className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black rounded-full shadow-xl shadow-blue-500/20 transition-all hover:scale-105 active:scale-95 flex items-center gap-2 outline-none"
                   >
                     <Coffee className="w-5 h-5" /> Buy Me a Coffee

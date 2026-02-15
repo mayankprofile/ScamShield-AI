@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Scanner } from './components/Scanner';
 import { ResultDisplay } from './components/ResultDisplay';
@@ -18,6 +19,7 @@ import { Login } from './components/Login';
 import { Signup } from './components/Signup';
 import { Dashboard } from './components/Dashboard';
 import { Profile } from './components/Profile';
+import { PaymentModal } from './components/PaymentModal';
 import { ScamAnalysis, HistoryItem, User, PlanType } from './types';
 import { analyzeContent } from './services/geminiService';
 import { translations, TranslationKey } from './services/translations';
@@ -82,6 +84,7 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [showToast, setShowToast] = useState<string | null>(null);
@@ -126,12 +129,12 @@ const App: React.FC = () => {
 
   // Prevent body scroll when drawer is open
   useEffect(() => {
-    if (isDrawerOpen) {
+    if (isDrawerOpen || isPaymentOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-  }, [isDrawerOpen]);
+  }, [isDrawerOpen, isPaymentOpen]);
 
   const handleLanguageChange = (code: string) => {
     setIsTranslating(true);
@@ -224,12 +227,19 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  const openPayment = () => setIsPaymentOpen(true);
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-blue-500/30">
       <ContactModal 
         isOpen={isContactOpen} 
         onClose={() => setIsContactOpen(false)} 
         t={t} 
+      />
+
+      <PaymentModal 
+        isOpen={isPaymentOpen} 
+        onClose={() => setIsPaymentOpen(false)} 
       />
 
       {isTranslating && (
@@ -344,9 +354,9 @@ const App: React.FC = () => {
       ) : currentView === 'safety' ? (
         <SafetyGuide onStartScan={scrollToSection} t={t} />
       ) : currentView === 'invoice-detector' ? (
-        <InvoiceDetector t={t} />
+        <InvoiceDetector t={t} onBuyCoffee={openPayment} />
       ) : currentView === 'how-to-use' ? (
-        <HowToUse onBack={navigateToHome} t={t} onContactClick={() => scrollToSection('contact-section')} onNavigate={(v) => setCurrentView(v as View)} />
+        <HowToUse onBack={navigateToHome} t={t} onContactClick={() => setIsContactOpen(true)} onNavigate={(v) => setCurrentView(v as View)} />
       ) : currentView === 'login' ? (
         <Login onBack={navigateToHome} onSignupClick={() => setCurrentView('signup')} onLoginSuccess={(user) => { setCurrentUser(user); setCurrentView('dashboard'); setShowToast("Welcome back!"); }} />
       ) : currentView === 'signup' ? (
@@ -386,7 +396,7 @@ const App: React.FC = () => {
             {loading ? (
               <ScanningView />
             ) : analysis ? (
-              <ResultDisplay analysis={analysis} onReset={() => setAnalysis(null)} />
+              <ResultDisplay analysis={analysis} onReset={() => setAnalysis(null)} onBuyCoffee={openPayment} />
             ) : (
               <>
                 <Scanner onAnalyze={handleAnalyze} loading={loading} currentLanguage={language} />
@@ -443,7 +453,7 @@ const App: React.FC = () => {
                       </p>
                       <div className="flex flex-col items-center gap-4">
                         <button
-                          onClick={() => window.open('https://buymeacoffee.com/scamguard', '_blank')}
+                          onClick={openPayment}
                           className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black rounded-full shadow-xl shadow-blue-500/20 transition-all hover:scale-105 active:scale-95 flex items-center gap-2 outline-none"
                         >
                           <Coffee className="w-5 h-5" /> Buy Me a Coffee
